@@ -41,7 +41,9 @@ app.on('ready', () => {
       // await copyData();
       await AbonnePerseXLSX();
       console.log('hello 01');
-      await MinisterPerseXLSX();
+      MinisterPerseXLSX().then(() => {
+        console.log('azuul');
+      });
       console.log('hello 02');
     }
   })();

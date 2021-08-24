@@ -45,18 +45,23 @@ const ws_row = [
   'ADM',
   'MINIS',
 ];
+console.log('rani mena ');
 function MinisterPerseXLSX() {
+  console.log('rani mena -1');
   return new Promise((resolve, reject) => {
+    console.log('rani mena 0');
     setTimeout(() => {
       const abonnerSheet = abonne.Sheets[abonne.SheetNames[0]];
-      // console.log("ws:", ws);
+      console.log('rani mena 1');
       const ws_fact = fact.Sheets[fact.SheetNames[0]];
+      console.log('rani mena 2');
       const ws_minist = minist.Sheets[minist.SheetNames[0]];
       const ws_abonment = abonment.Sheets[abonment.SheetNames[0]];
       const data = XLSX.utils.sheet_to_json(abonnerSheet);
       const data_minist = XLSX.utils.sheet_to_json(ws_minist);
       const data_fact = XLSX.utils.sheet_to_json(ws_fact);
       const data_abomment = XLSX.utils.sheet_to_json(ws_abonment);
+      // ================================================
       const ws_facts = data_fact.map((record) => {
         return [
           `${record.NUMAB}`,
@@ -78,29 +83,31 @@ function MinisterPerseXLSX() {
         return [`${record.NUMAB}`, `${record.ETATCPT}`];
       });
       const ws_abn = data.map((record) => {
-        return [`${record.NUMAB}`, `${record.RAISON}`, `${record.TYPABON}`];
+        return [`${record.NUMAB}`, `${record.RAISOC}`, `${record.TYPABON}`];
       });
+      console.log('ws_abn[0]:', ws_abn[0][0], ws_abn[1][3]);
+      // =================================================
       const filaN = ws_abn.map((e) => {
         if (
-          e[0] == ws_abnm[0] &&
-          e[0] == ws_minists[0] &&
-          e[0] == ws_facts[0]
+          e[0] == ws_abnm[0][0] &&
+          e[0] == ws_minists[0][0] &&
+          e[0] == ws_facts[0][0]
         ) {
           return [
             `${e[0]}`,
-            `${e[1]}`,
-            `${e[2]}`,
-            `${ws_abnm[1]}`,
-            `${ws_minists[1]}`,
-            `${ws_minists[2]}`,
-            `${ws_facts[1]}`,
-            `${ws_facts[2]}`,
-            `${ws_facts[3]}`,
-            `${ws_facts[4]}`,
-            `${ws_facts[5]}`,
-            `${ws_facts[6]}`,
-            `${ws_facts[7]}`,
-            `${ws_facts[8]}`,
+            `${ws_abn[1][1]}`,
+            `${ws_abn[1][2]}`,
+            `${ws_abnm[1][1]}`,
+            `${ws_facts[1][1]}`,
+            `${ws_facts[2][2]}`,
+            `${ws_facts[3][3]}`,
+            `${ws_facts[4][4]}`,
+            `${ws_facts[5][5]}`,
+            `${ws_facts[6][6]}`,
+            `${ws_facts[7][7]}`,
+            `${ws_facts[8][8]}`,
+            `${ws_minists[1][1]}`,
+            `${ws_minists[2][2]}`,
           ];
         }
       });
@@ -146,7 +153,7 @@ function MinisterPerseXLSX() {
       // });
       const newXlsx = XLSX.utils.book_new();
       const ws_name = `${unite_code} ${cell_unite}`;
-      var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], filaN));
+      var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], ws_facts));
       /* Add the worksheet to the workbook */
       XLSX.utils.book_append_sheet(newXlsx, wss, ws_name);
       ipcMain.on('hello', () => {
