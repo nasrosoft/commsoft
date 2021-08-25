@@ -85,75 +85,53 @@ function MinisterPerseXLSX() {
       const ws_abn = data.map((record) => {
         return [`${record.NUMAB}`, `${record.RAISOC}`, `${record.TYPABON}`];
       });
-      console.log('ws_abn[0]:', ws_abn[0][0], ws_abn[1][3]);
+
       // =================================================
-      const filaN = ws_abn.map((e) => {
-        if (
-          e[0] == ws_abnm[0][0] &&
-          e[0] == ws_minists[0][0] &&
-          e[0] == ws_facts[0][0]
-        ) {
-          return [
-            `${e[0]}`,
-            `${ws_abn[1][1]}`,
-            `${ws_abn[1][2]}`,
-            `${ws_abnm[1][1]}`,
-            `${ws_facts[1][1]}`,
-            `${ws_facts[2][2]}`,
-            `${ws_facts[3][3]}`,
-            `${ws_facts[4][4]}`,
-            `${ws_facts[5][5]}`,
-            `${ws_facts[6][6]}`,
-            `${ws_facts[7][7]}`,
-            `${ws_facts[8][8]}`,
-            `${ws_minists[1][1]}`,
-            `${ws_minists[2][2]}`,
-          ];
-        }
+      const filaN = ws_facts.map((e) => {
+        const obj = ws_abnm.find(
+          (o) => ((o[0] === e[0]) === ws_minists[0][0]) === ws_abn[0][0]
+        );
+        return [
+          `${ws_abn[0][0]}`,
+          `${ws_abn[1][1]}`,
+          `${ws_abn[2][2]}`,
+          `${ws_abnm[1][1]}`,
+          `${e[1]}`,
+          `${e[2]}`,
+          `${e[3]}`,
+          `${e[4]}`,
+          `${e[5]}`,
+          `${e[6]}`,
+          `${e[7]}`,
+          `${e[8]}`,
+          `${ws_minists[1][1]}`,
+          `${ws_minists[2][2]}`,
+        ];
+
+        // if (e[0] === (ws_abnm[0][0] && ws_minists[0][0] && ws_facts[0][0])) {
+        //   return [
+        //     `${e[0]}`,
+        //     `${e[1]}`,
+        //     `${e[1]}`,
+        //     `${ws_abnm[1][1]}`,
+        //     `${ws_facts[1][1]}`,
+        //     `${ws_facts[2][2]}`,
+        //     `${ws_facts[3][3]}`,
+        //     `${ws_facts[4][4]}`,
+        //     `${ws_facts[5][5]}`,
+        //     `${ws_facts[6][6]}`,
+        //     `${ws_facts[7][7]}`,
+        //     `${ws_facts[8][8]}`,
+        //     `${ws_minists[1][1]}`,
+        //     `${ws_minists[2][2]}`,
+        //   ];
+        // }
       });
 
-      // const ws_NUMAB = data.map((rec) => {
-      //   const ws_min = ws_minists.map((item) => {
-      //     if (rec.CODRUE === item[0]) {
-      //       console.log('yadra');
-      //       const test = ws_abnm.map((element) => {
-      //         if (rec.NUMAB === element[0]) {
-      //           return [
-      //             `${rec.NUMAB}`,
-      //             `${rec.RAISON}`,
-      //             `${rec.TYPABON}`,
-      //             `${element[1]}`,
-      //           ];
-      //         }
-      //         console.log('this');
-      //       });
-      //       const ff = ws_facts.map((wsFactu) => {
-      //         if (rec.NUMAB === wsFactu[0]) {
-      //           // console.log(`${rec.NUMAB}`);
-      //           return [
-      //             `${wsFactu[1]}`,
-      //             `${wsFactu[2]}`,
-      //             `${wsFactu[3]}`,
-      //             `${wsFactu[4]}`,
-      //             `${wsFactu[5]}`,
-      //             `${wsFactu[6]}`,
-      //             `${wsFactu[7]}`,
-      //             `${wsFactu[8]}`,
-      //             `${item[1]}`,
-      //             `${item[2]}`,
-      //           ];
-      //         }
-      //         console.log('here');
-      //       });
-      //       console.log('lehoooo');
-      //       return Array.prototype.push.apply(test, ff);
-      //     }
-      //   });
-      //   return ws_min;
-      // });
+      console.log(filaN);
       const newXlsx = XLSX.utils.book_new();
       const ws_name = `${unite_code} ${cell_unite}`;
-      var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], ws_facts));
+      var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], filaN));
       /* Add the worksheet to the workbook */
       XLSX.utils.book_append_sheet(newXlsx, wss, ws_name);
       ipcMain.on('hello', () => {
