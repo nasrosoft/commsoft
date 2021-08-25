@@ -37,15 +37,11 @@ app.on('ready', () => {
   mainWindow.on('closed', () => app.quit());
 
   (async () => {
-    if (true) {
-      // await copyData();
-      await AbonnePerseXLSX();
-      console.log('hello 01');
-      MinisterPerseXLSX().then(() => {
-        console.log('azuul');
-      });
-      console.log('hello 02');
-    }
+    // await copyData();
+    await AbonnePerseXLSX();
+    MinisterPerseXLSX().then(() => {
+      console.log('azuul');
+    });
   })();
 });
 

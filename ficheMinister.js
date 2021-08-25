@@ -75,7 +75,7 @@ function MinisterPerseXLSX() {
           `${record.CHEQUE}`,
         ];
       });
-      // console.table(ws_facts);
+
       const ws_minists = data_minist.map((record) => {
         return [`${record.NUMAB}`, `${record.ADM}`, `${record.MINIS}`];
       });
@@ -87,48 +87,28 @@ function MinisterPerseXLSX() {
       });
 
       // =================================================
-      const filaN = ws_abn.map((e) => {
-        const obj = ws_minists.find(
-          (o) => o[0] === e[0] && o[0] === ws_abnm[0][0]
-        );
-        return [
-          `${e[0]}`,
-          `${e[1]}`,
-          `${e[2]}`,
-          `${ws_abnm[1][1]}`,
-          `${ws_facts[1][1]}`,
-          `${ws_facts[2][2]}`,
-          `${ws_facts[3][3]}`,
-          `${ws_facts[4][4]}`,
-          `${ws_facts[5][5]}`,
-          `${ws_facts[6][6]}`,
-          `${ws_facts[7][7]}`,
-          `${ws_facts[8][8]}`,
-          `${ws_minists[1][1]}`,
-          `${ws_minists[2][2]}`,
-        ];
 
-        // if (e[0] === (ws_abnm[0][0] && ws_minists[0][0] && ws_facts[0][0])) {
-        //   return [
-        //     `${e[0]}`,
-        //     `${e[1]}`,
-        //     `${e[1]}`,
-        //     `${ws_abnm[1][1]}`,
-        //     `${ws_facts[1][1]}`,
-        //     `${ws_facts[2][2]}`,
-        //     `${ws_facts[3][3]}`,
-        //     `${ws_facts[4][4]}`,
-        //     `${ws_facts[5][5]}`,
-        //     `${ws_facts[6][6]}`,
-        //     `${ws_facts[7][7]}`,
-        //     `${ws_facts[8][8]}`,
-        //     `${ws_minists[1][1]}`,
-        //     `${ws_minists[2][2]}`,
-        //   ];
+      const filaN = ws_minists.map((e) => {
+        let result = [];
+        for (const item of ws_abn) {
+          if (e[0] === item[0] && Boolean(e[0])) {
+            // console.log('itme', item[0]);
+            result = [...result, ...item];
+            // break;
+            return result;
+          }
+          console.log('result:', result);
+        }
+        // for (const item of ws_abnm) {
+        //   if (e[0] === item[0]) {
+        //     result = [result, ...item];
+        // break;
+        //   }
         // }
+        return result;
       });
-
-      console.log(filaN);
+      // =================================================
+      // console.log(filaN);
       const newXlsx = XLSX.utils.book_new();
       const ws_name = `${unite_code} ${cell_unite}`;
       var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], filaN));
