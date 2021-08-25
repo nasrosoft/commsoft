@@ -89,29 +89,44 @@ function MinisterPerseXLSX() {
       // =================================================
 
       const filaN = ws_minists.map((e) => {
-        let result = [];
-        for (const item of ws_abn) {
-          if (e[0] === item[0] && Boolean(e[0])) {
-            // console.log('itme', item[0]);
-            result = [...result, ...item];
-            // break;
-            return result;
+        let result = [...e];
+        for(let i=0; i<ws_abn.length;i++){
+          
+          if (e[0] === ws_abn[i][0] && Boolean(e[0])) {
+            result = [...result, ws_abn[i][1], ws_abn[i][2]];
+            break;
           }
-          console.log('result:', result);
         }
-        // for (const item of ws_abnm) {
-        //   if (e[0] === item[0]) {
-        //     result = [result, ...item];
-        // break;
-        //   }
-        // }
+
+        for(let i=0; i<ws_abnm.length;i++){
+          // console.log(`e[0] => ${e[0]} === ws_abnm[i][0] => ${ws_abnm[i][0]}`);
+          if (e[0] === ws_abnm[i][0] && Boolean(e[0])) {
+            result = [...result, ws_abnm[i][1]];
+            break;
+          }
+        }
+
         return result;
-      });
+
+      }).filter(e => e.length>0);
+
+      const lastFinal = ws_facts.map(f => {
+        let res = [];
+        for(let i=0; i<filaN.length;i++){
+         
+          if (f[0] === filaN[i][0] && Boolean(f[0])) {
+            res=[...filaN[i], ...f];
+          }
+        }
+        return res;
+      }).filter(f => f.length > 0);
+
+      console.log('filaN', lastFinal);
       // =================================================
-      // console.log(filaN);
+    
       const newXlsx = XLSX.utils.book_new();
       const ws_name = `${unite_code} ${cell_unite}`;
-      var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], filaN));
+      var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], lastFinal));
       /* Add the worksheet to the workbook */
       XLSX.utils.book_append_sheet(newXlsx, wss, ws_name);
       ipcMain.on('hello', () => {
