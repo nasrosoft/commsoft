@@ -31,6 +31,8 @@ let arr1 = [];
 
 const ws_row = [
   'NUMAB',
+  'ADM',
+  'MINIS',
   'RAISON',
   'TYPABON',
   'ETATCPT',
@@ -42,8 +44,6 @@ const ws_row = [
   'DATREG',
   'DATSAISIE',
   'CHEQUE',
-  'ADM',
-  'MINIS',
 ];
 console.log('rani mena ');
 function MinisterPerseXLSX() {
@@ -88,42 +88,53 @@ function MinisterPerseXLSX() {
 
       // =================================================
 
-      const filaN = ws_minists.map((e) => {
-        let result = [...e];
-        for(let i=0; i<ws_abn.length;i++){
-          
-          if (e[0] === ws_abn[i][0] && Boolean(e[0])) {
-            result = [...result, ws_abn[i][1], ws_abn[i][2]];
-            break;
+      const filaN = ws_minists
+        .map((e) => {
+          let result = [...e];
+          for (let i = 0; i < ws_abn.length; i++) {
+            if (e[0] === ws_abn[i][0] && Boolean(e[0])) {
+              result = [...result, ws_abn[i][1], ws_abn[i][2]];
+              break;
+            }
           }
-        }
 
-        for(let i=0; i<ws_abnm.length;i++){
-          // console.log(`e[0] => ${e[0]} === ws_abnm[i][0] => ${ws_abnm[i][0]}`);
-          if (e[0] === ws_abnm[i][0] && Boolean(e[0])) {
-            result = [...result, ws_abnm[i][1]];
-            break;
+          for (let i = 0; i < ws_abnm.length; i++) {
+            // console.log(`e[0] => ${e[0]} === ws_abnm[i][0] => ${ws_abnm[i][0]}`);
+            if (e[0] === ws_abnm[i][0] && Boolean(e[0])) {
+              result = [...result, ws_abnm[i][1]];
+              break;
+            }
           }
-        }
 
-        return result;
+          return result;
+        })
+        .filter((e) => e.length > 0);
 
-      }).filter(e => e.length>0);
-
-      const lastFinal = ws_facts.map(f => {
-        let res = [];
-        for(let i=0; i<filaN.length;i++){
-         
-          if (f[0] === filaN[i][0] && Boolean(f[0])) {
-            res=[...filaN[i], ...f];
+      const lastFinal = ws_facts
+        .map((f) => {
+          let res = [];
+          for (let i = 0; i < filaN.length; i++) {
+            if (f[0] === filaN[i][0] && Boolean(f[0])) {
+              res = [
+                ...filaN[i],
+                f[1],
+                f[2],
+                f[3],
+                f[4],
+                f[5],
+                f[6],
+                f[7],
+                f[8],
+              ];
+            }
           }
-        }
-        return res;
-      }).filter(f => f.length > 0);
+          return res;
+        })
+        .filter((f) => f.length > 0);
 
       console.log('filaN', lastFinal);
       // =================================================
-    
+
       const newXlsx = XLSX.utils.book_new();
       const ws_name = `${unite_code} ${cell_unite}`;
       var wss = XLSX.utils.aoa_to_sheet(arr1.concat([ws_row], lastFinal));
@@ -140,7 +151,6 @@ function MinisterPerseXLSX() {
       resolve();
     }, 1000);
   });
-  // return console.log("hello");
 }
 
 module.exports.MinisterPerseXLSX = MinisterPerseXLSX;
