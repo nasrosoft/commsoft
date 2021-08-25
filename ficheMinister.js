@@ -87,23 +87,23 @@ function MinisterPerseXLSX() {
       });
 
       // =================================================
-      const filaN = ws_facts.map((e) => {
-        const obj = ws_abnm.find(
-          (o) => ((o[0] === e[0]) === ws_minists[0][0]) === ws_abn[0][0]
+      const filaN = ws_abn.map((e) => {
+        const obj = ws_minists.find(
+          (o) => o[0] === e[0] && o[0] === ws_abnm[0][0]
         );
         return [
-          `${ws_abn[0][0]}`,
-          `${ws_abn[1][1]}`,
-          `${ws_abn[2][2]}`,
-          `${ws_abnm[1][1]}`,
+          `${e[0]}`,
           `${e[1]}`,
           `${e[2]}`,
-          `${e[3]}`,
-          `${e[4]}`,
-          `${e[5]}`,
-          `${e[6]}`,
-          `${e[7]}`,
-          `${e[8]}`,
+          `${ws_abnm[1][1]}`,
+          `${ws_facts[1][1]}`,
+          `${ws_facts[2][2]}`,
+          `${ws_facts[3][3]}`,
+          `${ws_facts[4][4]}`,
+          `${ws_facts[5][5]}`,
+          `${ws_facts[6][6]}`,
+          `${ws_facts[7][7]}`,
+          `${ws_facts[8][8]}`,
           `${ws_minists[1][1]}`,
           `${ws_minists[2][2]}`,
         ];
