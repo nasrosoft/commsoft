@@ -1,5 +1,5 @@
 # commsoft
-a small ElectronJs application that allows to build XLS file (subscriber files) containing all the necessary information in order to avoid user errors, so that we can analyze the information and data of a correct database first.
+a small ElectronJs application that allows to build XLS file (customers data) containing all the necessary information in order to avoid user errors, so that we can analyze the information and data of a correct database first.
 
 - IT specialists only trust the machine, so in order to avoid human errors, I will try to adjust all transactions with the database to the automatic output of the Build file.
 - Using : Adobe XD, ElectronJS, Font Awesome, TailwindCSS.
